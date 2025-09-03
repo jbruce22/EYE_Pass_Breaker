@@ -1,3 +1,4 @@
+import time
 import itertools
 
 class startup:
@@ -30,6 +31,7 @@ class brute_force:
         self.password_length = password_length
 
     def execute(self):
+        start_time = time.time()
         print(f"Brute-forcing password...\nStarting number hack...")
         if self.pin_breaker(self.password, self.password_length) == None:
             print(f"Number hack failed.\nStarting letter hack...")
@@ -39,7 +41,8 @@ class brute_force:
                     print(f"Letter+Number hack failed.\nStarting string hack...")
                     if self.string_breaker(self.password, self.password_length) == None:
                         print("String hack failed. Password not found.")
-
+        end_time = time.time()
+        print(f"Brute-force completed in {end_time - start_time:.4f} seconds.")
 
     def pin_breaker(self, password, length):
         for i in range(0, 10**length):
