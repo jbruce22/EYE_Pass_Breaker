@@ -10,7 +10,7 @@ class startup:
         user = user_input()
         user.get_input()
         brute = brute_force(user.password, user.password_length)
-        brute.execute()
+        return brute.execute()
 
 class user_input:
     def __init__(self):
@@ -43,7 +43,8 @@ class brute_force:
                         print("String hack failed. Password not found.")
         end_time = time.time()
         print(f"Brute-force completed in {end_time - start_time:.4f} seconds.")
-
+        return end_time - start_time
+    
     def pin_breaker(self, password, length):
         for i in range(0, 10**length):
             attempt = str(i).zfill(length)
