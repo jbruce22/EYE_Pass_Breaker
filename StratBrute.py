@@ -88,5 +88,9 @@ class brute_force:
         print("\nPassword not found.")
         return None
 
+
 start = startup()
-start.run()
+while True:
+    start.run()
+    if input("Run again? (y/n): ").lower() != 'y':
+        break
