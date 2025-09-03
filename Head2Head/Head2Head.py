@@ -1,7 +1,6 @@
 import subprocess
 import time
-import Head_Brute
-import Head_StratBrute
+import os
 
 class startup:
     def __init__(self):
@@ -12,20 +11,27 @@ class startup:
         user = user_input()
         user.get_input()
         
+        head2head_dir = os.path.dirname(os.path.abspath(__file__))
+        strat_path = os.path.join(head2head_dir, "Head_StratBrute.py")
+        brute_path = os.path.join(head2head_dir, "Head_Brute.py")
+
         start_time = time.time()
-        strat_proc = subprocess.run(["python", "Head_StratBrute.py", user.password])
+        strat_proc = subprocess.run(["python", strat_path, user.password])
         strat_time = time.time() - start_time
 
         start_time = time.time()
-        brute_proc = subprocess.run(["python", "Head_Brute.py", user.password, str(user.determine_password_type(user.password))])
+        brute_proc = subprocess.run(["python", brute_path, user.password, str(user.determine_password_type(user.password))])
         brute_time = time.time() - start_time
 
         if strat_time < brute_time:
             print(f"StratBrute was faster by {brute_time - strat_time} seconds.")
             return [user.password, strat_time]
-        else:
+        elif brute_time < strat_time:
             print(f"Brute was faster by {strat_time - brute_time} seconds.")
             return [user.password, brute_time]
+        else:
+            print("Both methods took the same time!")
+            return [user.password, strat_time]
 
     
 class user_input:
@@ -50,6 +56,7 @@ class user_input:
         
 start = startup()
 info = start.run()
-with open("H2H_" + str(info[0]) + ".txt", "w") as f:
-    f.write(f"Password: {info[0]}\nTime Taken: {info[1]} seconds\n")
-print("Info written to file.")
+if info[1] > 45:
+    with open("H2H_" + str(info[0]) + ".txt", "w") as f:
+        f.write(f"Password: {info[0]}\nTime Taken: {info[1]} seconds\n")
+    print("Info written to file.")

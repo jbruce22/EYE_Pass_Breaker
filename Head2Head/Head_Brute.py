@@ -1,3 +1,4 @@
+import sys
 import time
 import itertools
 
@@ -42,3 +43,6 @@ class brute_force:
                 return end_time - start_time
         print("\nPassword not found.")
         return None
+
+run = brute_force(sys.argv[1], len(sys.argv[1]), int(sys.argv[2]))
+time_taken = run.execute()
